@@ -1,8 +1,8 @@
-package com.lethimcook.feed_service.service;
+package com.bieggerm.feedservice.service;
 
-import com.lethimcook.feed_service.model.CollectionElement;
-import com.lethimcook.feed_service.model.FeedElement;
-import com.lethimcook.feed_service.model.RecipeResponse;
+import com.bieggerm.feedservice.model.CollectionElement;
+import com.bieggerm.feedservice.model.FeedElement;
+import com.bieggerm.feedservice.model.RecipeResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 

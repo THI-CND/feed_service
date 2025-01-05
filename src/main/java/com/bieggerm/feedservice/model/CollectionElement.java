@@ -1,4 +1,4 @@
-package com.lethimcook.feed_service.model;
+package com.bieggerm.feedservice.model;
 
 public class CollectionElement extends FeedElement {
     private String author;

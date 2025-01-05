@@ -1,4 +1,4 @@
-package com.lethimcook.feed_service;
+package com.bieggerm.feedservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

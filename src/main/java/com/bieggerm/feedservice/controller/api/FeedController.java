@@ -1,9 +1,7 @@
-package com.lethimcook.feed_service.controller.api;
+package com.bieggerm.feedservice.controller.api;
 
-import com.fasterxml.jackson.core.JsonEncoding;
-import com.lethimcook.feed_service.model.CollectionElement;
-import com.lethimcook.feed_service.model.FeedElement;
-import com.lethimcook.feed_service.service.FeedService;
+import com.bieggerm.feedservice.model.FeedElement;
+import com.bieggerm.feedservice.service.FeedService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
