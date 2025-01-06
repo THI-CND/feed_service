@@ -26,6 +26,7 @@ public class FeedServiceImpl implements FeedService {
         List<FeedElement> feedElements = new ArrayList<>(feedCache.findAll("recipe", page));
         feedElements.addAll(feedCache.findAll("collection", page));
 
+        markAsRead(userId, feedElements);
         Collections.shuffle(feedElements);
         return feedElements;
     }
@@ -36,12 +37,18 @@ public class FeedServiceImpl implements FeedService {
         }
     }
 
+    private void markAsRead(String userId, List<FeedElement> feedElements) {
+        feedElements.forEach(feedElement -> feedCache.markAsRead(userId, feedElement));
+    }
+
     private void refreshCache() {
         String url = "http://localhost:8088/api/v1/recipe";
         RecipeResponse[] recipeResponses = restTemplate.getForObject(url, RecipeResponse[].class);
+
         //get Collections
         String url2 = "http://localhost:8000/collections";
         CollectionResponse[] collections = restTemplate.getForObject(url2, CollectionResponse[].class);
+
         List<FeedElement> feedElements = new ArrayList<>();
         if (recipeResponses != null) {
             feedElements.addAll(Arrays.asList(recipeResponses));
