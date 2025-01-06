@@ -3,7 +3,6 @@ package com.bieggerm.feedservice.adapters.out.redis;
 import com.bieggerm.feedservice.domain.model.CollectionResponse;
 import com.bieggerm.feedservice.domain.model.FeedElement;
 import com.bieggerm.feedservice.domain.model.RecipeResponse;
-import com.google.api.SystemParameterRule;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 

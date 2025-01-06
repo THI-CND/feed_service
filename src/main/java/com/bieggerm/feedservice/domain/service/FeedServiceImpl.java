@@ -42,11 +42,11 @@ public class FeedServiceImpl implements FeedService {
     }
 
     private void refreshCache() {
-        String url = "http://localhost:8088/api/v1/recipe";
+        String url = "http://recipe-service:8088/api/v1/recipe";
         RecipeResponse[] recipeResponses = restTemplate.getForObject(url, RecipeResponse[].class);
 
         //get Collections
-        String url2 = "http://localhost:8000/collections";
+        String url2 = "http://collection-service:8000/collections";
         CollectionResponse[] collections = restTemplate.getForObject(url2, CollectionResponse[].class);
 
         List<FeedElement> feedElements = new ArrayList<>();
