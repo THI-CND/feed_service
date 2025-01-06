@@ -4,6 +4,7 @@ import com.bieggerm.feedservice.adapters.out.redis.FeedCache;
 import com.bieggerm.feedservice.domain.model.CollectionResponse;
 import com.bieggerm.feedservice.domain.model.FeedElement;
 import com.bieggerm.feedservice.domain.model.RecipeResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,6 +19,12 @@ public class FeedServiceImpl implements FeedService {
     }
     private final RestTemplate restTemplate;
     private final FeedCache feedCache;
+
+    @Value("${recipe.service.url}")
+    private String recipeServiceUrl;
+    @Value("${collection.service.url}")
+    private String collectionServiceUrl;
+
 
     public Collection<FeedElement> getFeed(String userId, int page) {
         if (page == 1) {
@@ -42,12 +49,8 @@ public class FeedServiceImpl implements FeedService {
     }
 
     private void refreshCache() {
-        String url = "http://recipe-service:8088/api/v1/recipe";
-        RecipeResponse[] recipeResponses = restTemplate.getForObject(url, RecipeResponse[].class);
-
-        //get Collections
-        String url2 = "http://collection-service:8000/collections";
-        CollectionResponse[] collections = restTemplate.getForObject(url2, CollectionResponse[].class);
+        RecipeResponse[] recipeResponses = restTemplate.getForObject(recipeServiceUrl, RecipeResponse[].class);
+        CollectionResponse[] collections = restTemplate.getForObject(collectionServiceUrl, CollectionResponse[].class);
 
         List<FeedElement> feedElements = new ArrayList<>();
         if (recipeResponses != null) {
