@@ -1,24 +1,22 @@
-package com.bieggerm.feedservice.adapters.out.redis.dto;
+package com.bieggerm.feedservice.adapters.out.rest.dto;
 
 import com.bieggerm.feedservice.domain.model.CollectionElement;
 import com.bieggerm.feedservice.domain.model.FeedElement;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serializable;
 
 @Setter
 @Getter
 @Data
-@RedisHash("CollectionResponse")
-@EqualsAndHashCode(callSuper = true)
-public class CollectionElementDto extends FeedElementDto implements Serializable {
+public class CollectionElementDto implements Serializable {
     private String author;
     private final String type = "collection";
     private String id;
+    private String name;
+    private String description;
 
     public static CollectionElementDto fromElementToDto(CollectionElement collectionElement) {
         CollectionElementDto entity = new CollectionElementDto();
@@ -29,12 +27,12 @@ public class CollectionElementDto extends FeedElementDto implements Serializable
         return entity;
     }
 
-    public FeedElement fromDtoToElement(CollectionElementDto feedElementDto) {
+    public FeedElement fromDtoToElement(CollectionElementDto collectionElementDto) {
         CollectionElement collectionElement = new CollectionElement();
-        collectionElement.setName(feedElementDto.getName());
-        collectionElement.setDescription(feedElementDto.getDescription());
-        collectionElement.setAuthor(feedElementDto.getAuthor());
-        collectionElement.setId(feedElementDto.getId());
+        collectionElement.setName(collectionElementDto.getName());
+        collectionElement.setDescription(collectionElementDto.getDescription());
+        collectionElement.setAuthor(collectionElementDto.getAuthor());
+        collectionElement.setId(collectionElementDto.getId());
         return collectionElement;
     }
 }

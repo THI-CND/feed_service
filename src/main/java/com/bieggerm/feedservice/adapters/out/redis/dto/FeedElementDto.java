@@ -21,20 +21,20 @@ public abstract class FeedElementDto implements Serializable {
     private String name;
     private String description;
 
-    public static FeedElementDto fromFeedElement(FeedElement feedElement) {
+    public static FeedElementDto fromElementToDto(FeedElement feedElement) {
         if (feedElement instanceof RecipeElement) {
-            return RecipeElementDto.fromRecipeResponse((RecipeElement) feedElement);
+            return RecipeElementDto.fromElementToDto((RecipeElement) feedElement);
         } else if (feedElement instanceof CollectionElement) {
-            return CollectionElementDto.fromCollectionResponse((CollectionElement) feedElement);
+            return CollectionElementDto.fromElementToDto((CollectionElement) feedElement);
         }
         return null;
     }
 
-    public static FeedElement toFeedElement(FeedElementDto feedElementDto) {
+    public static FeedElement fromDtoToElement(FeedElementDto feedElementDto) {
         if (feedElementDto instanceof RecipeElementDto) {
-            return ((RecipeElementDto) feedElementDto).toRecipeResponse((RecipeElementDto) feedElementDto);
+            return ((RecipeElementDto) feedElementDto).fromDtoToElement((RecipeElementDto) feedElementDto);
         } else if (feedElementDto instanceof CollectionElementDto) {
-            return ((CollectionElementDto) feedElementDto).toCollectionResponse((CollectionElementDto) feedElementDto);
+            return ((CollectionElementDto) feedElementDto).fromDtoToElement((CollectionElementDto) feedElementDto);
         }
         return null;
     }

@@ -21,7 +21,7 @@ public class RedisCacheImpl implements FeedCache, Serializable {
     }
 
     public void save(FeedElement feedElement) {
-            FeedElementDto feedElementDto = FeedElementDto.fromFeedElement(feedElement);
+            FeedElementDto feedElementDto = FeedElementDto.fromElementToDto(feedElement);
             template.opsForZSet().add("recipezset", feedElementDto.getName(), System.currentTimeMillis());
             template.opsForHash().put("recipehash", feedElementDto.getName(), feedElementDto);
     }
@@ -33,13 +33,13 @@ public class RedisCacheImpl implements FeedCache, Serializable {
         assert hashFields != null;
         for (Object hashField : hashFields) {
             FeedElementDto feedElementDto = (FeedElementDto) template.opsForHash().get("recipehash", hashField);
-            results.add(FeedElementDto.toFeedElement(feedElementDto));
+            results.add(FeedElementDto.fromDtoToElement(feedElementDto));
         }
         return results;
     }
 
     public void markAsRead(String userId, FeedElement feedElement) {
-        FeedElementDto feedElementDto = FeedElementDto.fromFeedElement(feedElement);
+        FeedElementDto feedElementDto = FeedElementDto.fromElementToDto(feedElement);
         template.opsForHash().put(userId, feedElementDto.getName(), true);
     }
 
