@@ -9,14 +9,11 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-@Data
-@RedisHash("FeedElement")
-public abstract class FeedElement implements Serializable {
-
+public abstract class FeedElement {
+    private String id;
     private String name;
     private String description;
 
 
     public abstract String getType();
-
 }

@@ -1,9 +1,8 @@
 package com.bieggerm.feedservice.adapters.out.redis;
 
+import com.bieggerm.feedservice.adapters.out.redis.dto.FeedElementDto;
 import com.bieggerm.feedservice.app.ports.outgoing.FeedCache;
-import com.bieggerm.feedservice.domain.model.CollectionResponse;
 import com.bieggerm.feedservice.domain.model.FeedElement;
-import com.bieggerm.feedservice.domain.model.RecipeResponse;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -22,9 +21,9 @@ public class RedisCacheImpl implements FeedCache, Serializable {
     }
 
     public void save(FeedElement feedElement) {
-        FeedElementDto feedElementDto = FeedElementDto.fromFeedElement(feedElement);
-        template.opsForZSet().add(feedElement.getType()+"zset", feedElementDto.getName(), System.currentTimeMillis());
-        template.opsForHash().put(feedElement.getType()+"hash", feedElementDto.getName(), feedElement);
+            FeedElementDto feedElementDto = FeedElementDto.fromFeedElement(feedElement);
+            template.opsForZSet().add("recipezset", feedElementDto.getName(), System.currentTimeMillis());
+            template.opsForHash().put("recipehash", feedElementDto.getName(), feedElementDto);
     }
 
 
@@ -33,14 +32,8 @@ public class RedisCacheImpl implements FeedCache, Serializable {
         List<FeedElement> results = new ArrayList<>();
         assert hashFields != null;
         for (Object hashField : hashFields) {
-            switch (type) {
-                case "recipe":
-                    results.add((RecipeResponse) template.opsForHash().get("recipehash", hashField));
-                    break;
-                case "collection":
-                    results.add((CollectionResponse) template.opsForHash().get("collectionhash", hashField));
-                    break;
-            }
+            FeedElementDto feedElementDto = (FeedElementDto) template.opsForHash().get("recipehash", hashField);
+            results.add(FeedElementDto.toFeedElement(feedElementDto));
         }
         return results;
     }

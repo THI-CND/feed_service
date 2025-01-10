@@ -1,9 +1,9 @@
 package com.bieggerm.feedservice.app;
 
 import com.bieggerm.feedservice.app.ports.outgoing.FeedCache;
-import com.bieggerm.feedservice.domain.model.CollectionResponse;
+import com.bieggerm.feedservice.domain.model.CollectionElement;
 import com.bieggerm.feedservice.domain.model.FeedElement;
-import com.bieggerm.feedservice.domain.model.RecipeResponse;
+import com.bieggerm.feedservice.domain.model.RecipeElement;
 import com.bieggerm.feedservice.domain.service.FeedService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -50,12 +50,12 @@ public class FeedServiceImpl implements FeedService {
     }
 
     private void refreshCache() {
-        RecipeResponse[] recipeResponses = restTemplate.getForObject(recipeServiceUrl, RecipeResponse[].class);
-        CollectionResponse[] collections = restTemplate.getForObject(collectionServiceUrl, CollectionResponse[].class);
+        RecipeElement[] recipeRespons = restTemplate.getForObject(recipeServiceUrl, RecipeElement[].class);
+        CollectionElement[] collections = restTemplate.getForObject(collectionServiceUrl, CollectionElement[].class);
 
         List<FeedElement> feedElements = new ArrayList<>();
-        if (recipeResponses != null) {
-            feedElements.addAll(Arrays.asList(recipeResponses));
+        if (recipeRespons != null) {
+            feedElements.addAll(Arrays.asList(recipeRespons));
         }
         if (collections != null) {
             feedElements.addAll(Arrays.asList(collections));
