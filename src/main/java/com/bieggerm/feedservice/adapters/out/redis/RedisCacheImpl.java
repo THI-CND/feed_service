@@ -1,5 +1,6 @@
 package com.bieggerm.feedservice.adapters.out.redis;
 
+import com.bieggerm.feedservice.app.ports.outgoing.FeedCache;
 import com.bieggerm.feedservice.domain.model.CollectionResponse;
 import com.bieggerm.feedservice.domain.model.FeedElement;
 import com.bieggerm.feedservice.domain.model.RecipeResponse;
@@ -7,24 +8,23 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @Repository
-public class RedisCache implements FeedCache, Serializable {
+public class RedisCacheImpl implements FeedCache, Serializable {
 
     private final RedisTemplate<String, Object> template;
 
-    public RedisCache(RedisTemplate<String, Object> template) {
+    public RedisCacheImpl(RedisTemplate<String, Object> template) {
         this.template = template;
     }
 
     public void save(FeedElement feedElement) {
-        template.opsForZSet().add(feedElement.getType()+"zset", feedElement.getName(), System.currentTimeMillis());
-        template.opsForHash().put(feedElement.getType()+"hash", feedElement.getName(), feedElement);
+        FeedElementDto feedElementDto = FeedElementDto.fromFeedElement(feedElement);
+        template.opsForZSet().add(feedElement.getType()+"zset", feedElementDto.getName(), System.currentTimeMillis());
+        template.opsForHash().put(feedElement.getType()+"hash", feedElementDto.getName(), feedElement);
     }
 
 
@@ -42,12 +42,12 @@ public class RedisCache implements FeedCache, Serializable {
                     break;
             }
         }
-
         return results;
     }
 
     public void markAsRead(String userId, FeedElement feedElement) {
-        template.opsForHash().put(userId, feedElement.getName(), true);
+        FeedElementDto feedElementDto = FeedElementDto.fromFeedElement(feedElement);
+        template.opsForHash().put(userId, feedElementDto.getName(), true);
     }
 
 }

@@ -1,9 +1,10 @@
-package com.bieggerm.feedservice.domain.service;
+package com.bieggerm.feedservice.app;
 
-import com.bieggerm.feedservice.adapters.out.redis.FeedCache;
+import com.bieggerm.feedservice.app.ports.outgoing.FeedCache;
 import com.bieggerm.feedservice.domain.model.CollectionResponse;
 import com.bieggerm.feedservice.domain.model.FeedElement;
 import com.bieggerm.feedservice.domain.model.RecipeResponse;
+import com.bieggerm.feedservice.domain.service.FeedService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
