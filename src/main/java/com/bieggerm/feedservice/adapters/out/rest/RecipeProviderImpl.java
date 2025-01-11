@@ -11,18 +11,18 @@ import org.springframework.web.client.RestTemplate;
 
 public class RecipeProviderImpl {
 
-    @Value("${recipe.service.url}")
-    private String recipeServiceUrl;
-
-    private final RestTemplate restTemplate = new RestTemplate();
-
-    public RecipeElement[] getRecipes() {
-        RecipeElementDto[] recipeElementDtos = restTemplate.getForObject(recipeServiceUrl, RecipeElementDto[].class);
-        assert recipeElementDtos != null;
-        RecipeElement[] recipeElements = new RecipeElement[recipeElementDtos.length];
-        for (int i = 0; i < recipeElementDtos.length; i++) {
-            recipeElements[i] = (RecipeElement) recipeElementDtos[i].fromDtoToElement(recipeElementDtos[i]);
-        }
-        return recipeElements;
-    }
+//    @Value("${recipe.service.url}")
+//    private String recipeServiceUrl;
+//
+//    private final RestTemplate restTemplate = new RestTemplate();
+//
+//    public RecipeElement[] getRecipes() {
+//        RecipeElementDto[] recipeElementDtos = restTemplate.getForObject(recipeServiceUrl, RecipeElementDto[].class);
+//        assert recipeElementDtos != null;
+//        RecipeElement[] recipeElements = new RecipeElement[recipeElementDtos.length];
+//        for (int i = 0; i < recipeElementDtos.length; i++) {
+//            recipeElements[i] = (RecipeElement) recipeElementDtos[i].fromDtoToElement(recipeElementDtos[i]);
+//        }
+//        return recipeElements;
+//    }
 }
