@@ -1,13 +1,22 @@
-FROM openjdk:17-jdk-slim
-LABEL authors="BieggerM"
-# Set the working directory in the container
+FROM maven:3-eclipse-temurin-23 AS build
+LABEL maintainer="marius biegger"
+
+WORKDIR /build
+
+COPY pom.xml .
+COPY src src
+
+RUN mvn clean install -DskipTests
+
+FROM eclipse-temurin:23-alpine
+
+ARG configuration=development
+ENV SPRING_PROFILES_ACTIVE=$configuration
+
 WORKDIR /app
 
-# Copy the project’s jar file into the container at /app
-COPY target/feed_service-0.0.1-SNAPSHOT.jar /app/feedservice.jar
+COPY --from=build /build/target/*.jar server.jar
 
-# Make port 8080 available to the world outside this container
 EXPOSE 8080
 
-# Run the jar file
-ENTRYPOINT ["java", "-jar", "/app/feedservice.jar"]
+ENTRYPOINT ["java", "-jar", "server.jar"]
