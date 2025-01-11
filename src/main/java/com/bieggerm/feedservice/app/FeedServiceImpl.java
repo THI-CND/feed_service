@@ -28,8 +28,7 @@ public class FeedServiceImpl implements FeedService {
         if (page == 1) {
             refreshCache();
         }
-        List<FeedElement> feedElements = new ArrayList<>(feedCache.findAll("recipe", page));
-        feedElements.addAll(feedCache.findAll("collection", page));
+        List<FeedElement> feedElements = new ArrayList<>(feedCache.findAll(page));
 
         markAsRead(userId, feedElements);
         Collections.shuffle(feedElements);

@@ -16,6 +16,7 @@ public class RecipeElementDto implements Serializable {
     private final String type = "recipe";
     private String name;
     private String description;
+    private String author;
 
     public static RecipeElementDto fromElementToDto(RecipeElement recipeElement) {
         RecipeElementDto entity = new RecipeElementDto();

@@ -16,7 +16,7 @@ import java.io.Serializable;
 @RedisHash("RecipeResponse")
 @EqualsAndHashCode(callSuper = true)
 public class RecipeElementDto extends FeedElementDto implements Serializable {
-    private String id;
+
     private final String type = "recipe";
 
     public static RecipeElementDto fromElementToDto(RecipeElement recipeElement) {
@@ -24,6 +24,7 @@ public class RecipeElementDto extends FeedElementDto implements Serializable {
         entity.setName(recipeElement.getName());
         entity.setDescription(recipeElement.getDescription());
         entity.setId(recipeElement.getId());
+        entity.setAuthor(recipeElement.getAuthor());
         return entity;
     }
 
@@ -32,6 +33,7 @@ public class RecipeElementDto extends FeedElementDto implements Serializable {
         recipeElement.setName(feedElementDto.getName());
         recipeElement.setDescription(feedElementDto.getDescription());
         recipeElement.setId(feedElementDto.getId());
+        recipeElement.setAuthor(feedElementDto.getAuthor());
         return recipeElement;
     }
 }

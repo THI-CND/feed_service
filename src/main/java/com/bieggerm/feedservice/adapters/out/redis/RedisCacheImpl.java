@@ -22,17 +22,17 @@ public class RedisCacheImpl implements FeedCache, Serializable {
 
     public void save(FeedElement feedElement) {
             FeedElementDto feedElementDto = FeedElementDto.fromElementToDto(feedElement);
-            template.opsForZSet().add("recipezset", feedElementDto.getName(), System.currentTimeMillis());
-            template.opsForHash().put("recipehash", feedElementDto.getName(), feedElementDto);
+            template.opsForZSet().add("feedZset", feedElementDto.getName(), System.currentTimeMillis());
+            template.opsForHash().put("feedHash", feedElementDto.getName(), feedElementDto);
     }
 
 
-    public List<FeedElement> findAll(String type, int page) {
-        Set<Object> hashFields = template.opsForZSet().range(type+"zset", page*5L-5L, page * 5L);
+    public List<FeedElement> findAll(int page) {
+        Set<Object> hashFields = template.opsForZSet().range("feedZset", page*5L-5L, page * 5L);
         List<FeedElement> results = new ArrayList<>();
         assert hashFields != null;
         for (Object hashField : hashFields) {
-            FeedElementDto feedElementDto = (FeedElementDto) template.opsForHash().get("recipehash", hashField);
+            FeedElementDto feedElementDto = (FeedElementDto) template.opsForHash().get("feedHash", hashField);
             results.add(FeedElementDto.fromDtoToElement(feedElementDto));
         }
         return results;

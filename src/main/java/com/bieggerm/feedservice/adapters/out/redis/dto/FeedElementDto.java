@@ -18,8 +18,10 @@ import java.io.Serializable;
 @RedisHash("FeedElement")
 public abstract class FeedElementDto implements Serializable {
 
+    private String id;
     private String name;
     private String description;
+    private String author;
 
     public static FeedElementDto fromElementToDto(FeedElement feedElement) {
         if (feedElement instanceof RecipeElement) {

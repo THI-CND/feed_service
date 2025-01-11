@@ -16,9 +16,8 @@ import java.io.Serializable;
 @RedisHash("CollectionResponse")
 @EqualsAndHashCode(callSuper = true)
 public class CollectionElementDto extends FeedElementDto implements Serializable {
-    private String author;
+
     private final String type = "collection";
-    private String id;
 
     public static CollectionElementDto fromElementToDto(CollectionElement collectionElement) {
         CollectionElementDto entity = new CollectionElementDto();
