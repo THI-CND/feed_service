@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 
-@Service
-public class RecipeProviderImpl implements RecipeProvider {
+
+public class RecipeProviderImpl {
 
     @Value("${recipe.service.url}")
     private String recipeServiceUrl;

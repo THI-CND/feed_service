@@ -18,7 +18,7 @@ public class FeedServiceImpl implements FeedService {
     private final CollectionProvider collectionProvider;
     private final RecipeProvider recipeProvider;
 
-    public FeedServiceImpl(FeedCache feedCache, CollectionProvider collectionProvider, RecipeProvider recipeProvider) {
+    public FeedServiceImpl(FeedCache feedCache, CollectionProvider collectionProvider,  RecipeProvider recipeProvider) {
         this.feedCache = feedCache;
         this.collectionProvider = collectionProvider;
         this.recipeProvider = recipeProvider;
@@ -47,9 +47,11 @@ public class FeedServiceImpl implements FeedService {
 
     private void refreshCache() {
         RecipeElement[] recipes = recipeProvider.getRecipes();
+
         CollectionElement[] collections = collectionProvider.getCollections();
 
         List<FeedElement> feedElements = new ArrayList<>();
+
         if (recipes != null) {
             feedElements.addAll(Arrays.asList(recipes));
         }
