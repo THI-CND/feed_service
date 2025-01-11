@@ -25,6 +25,7 @@ public class GRPCRecipeProvider implements RecipeProvider {
                 recipeElements[i].setId(response.getRecipes(i).getId());
                 recipeElements[i].setName(response.getRecipes(i).getName());
                 recipeElements[i].setDescription(response.getRecipes(i).getDescription());
+                recipeElements[i].setAuthor(response.getRecipes(i).getAuthor());
             }
         } else {
             System.out.println("No recipes found");

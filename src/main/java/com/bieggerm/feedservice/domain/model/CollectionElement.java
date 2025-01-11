@@ -7,7 +7,6 @@ import lombok.Setter;
 @Getter
 public class CollectionElement extends FeedElement {
 
-    private String author;
     private String type = "collection";
 
     @Override

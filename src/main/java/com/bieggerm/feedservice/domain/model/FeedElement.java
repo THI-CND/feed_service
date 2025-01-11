@@ -9,7 +9,7 @@ public abstract class FeedElement {
     private String id;
     private String name;
     private String description;
-
+    private String author;
 
     public abstract String getType();
 }
