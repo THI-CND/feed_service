@@ -2,6 +2,7 @@ package com.bieggerm.feedservice.app;
 
 import com.bieggerm.feedservice.app.ports.outgoing.CollectionProvider;
 import com.bieggerm.feedservice.app.ports.outgoing.FeedCache;
+import com.bieggerm.feedservice.app.ports.outgoing.MessageBroker;
 import com.bieggerm.feedservice.app.ports.outgoing.RecipeProvider;
 import com.bieggerm.feedservice.domain.model.CollectionElement;
 import com.bieggerm.feedservice.domain.model.FeedElement;
@@ -17,11 +18,13 @@ public class FeedServiceImpl implements FeedService {
     private final FeedCache feedCache;
     private final CollectionProvider collectionProvider;
     private final RecipeProvider recipeProvider;
+    private final MessageBroker messageBroker;
 
-    public FeedServiceImpl(FeedCache feedCache, CollectionProvider collectionProvider,  RecipeProvider recipeProvider) {
+    public FeedServiceImpl(FeedCache feedCache, CollectionProvider collectionProvider, RecipeProvider recipeProvider, MessageBroker messageBroker) {
         this.feedCache = feedCache;
         this.collectionProvider = collectionProvider;
         this.recipeProvider = recipeProvider;
+        this.messageBroker = messageBroker;
     }
 
     public Collection<FeedElement> getFeed(String userId, int page) {
@@ -58,5 +61,6 @@ public class FeedServiceImpl implements FeedService {
             feedElements.addAll(Arrays.asList(collections));
         }
         saveInCache(feedElements);
+        messageBroker.sendMessage("Cache refreshed", "feed");
     }
 }
