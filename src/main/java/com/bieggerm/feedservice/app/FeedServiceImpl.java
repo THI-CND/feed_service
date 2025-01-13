@@ -1,14 +1,12 @@
 package com.bieggerm.feedservice.app;
 
-import com.bieggerm.feedservice.app.ports.outgoing.CollectionProvider;
-import com.bieggerm.feedservice.app.ports.outgoing.FeedCache;
-import com.bieggerm.feedservice.app.ports.outgoing.MessageBroker;
-import com.bieggerm.feedservice.app.ports.outgoing.RecipeProvider;
+import com.bieggerm.feedservice.app.ports.outgoing.*;
 import com.bieggerm.feedservice.domain.model.CollectionElement;
 import com.bieggerm.feedservice.domain.model.FeedElement;
 import com.bieggerm.feedservice.domain.model.RecipeElement;
 import com.bieggerm.feedservice.domain.service.FeedService;
 import org.springframework.stereotype.Service;
+import org.fluentd.logger.FluentLogger;
 
 import java.util.*;
 
@@ -19,20 +17,26 @@ public class FeedServiceImpl implements FeedService {
     private final CollectionProvider collectionProvider;
     private final RecipeProvider recipeProvider;
     private final MessageBroker messageBroker;
+    private final RemoteLogger LOG;
 
-    public FeedServiceImpl(FeedCache feedCache, CollectionProvider collectionProvider, RecipeProvider recipeProvider, MessageBroker messageBroker) {
+
+    public FeedServiceImpl(FeedCache feedCache, CollectionProvider collectionProvider, RecipeProvider recipeProvider, MessageBroker messageBroker, RemoteLogger LOG) {
         this.feedCache = feedCache;
         this.collectionProvider = collectionProvider;
         this.recipeProvider = recipeProvider;
         this.messageBroker = messageBroker;
+        this.LOG = LOG;
     }
 
     public Collection<FeedElement> getFeed(String userId, int page) {
         if (page == 1) {
             refreshCache();
+            LOG.log("cache-refreshed", new HashMap<String, Object>( Map.of("user", userId )));
         }
         List<FeedElement> feedElements = new ArrayList<>(feedCache.findAll(page));
-
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("user", userId );
+        LOG.log("feedprovided", data);
         markAsRead(userId, feedElements);
         Collections.shuffle(feedElements);
         return feedElements;
