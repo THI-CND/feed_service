@@ -6,7 +6,6 @@ import com.bieggerm.feedservice.domain.model.FeedElement;
 import com.bieggerm.feedservice.domain.model.RecipeElement;
 import com.bieggerm.feedservice.domain.service.FeedService;
 import org.springframework.stereotype.Service;
-import org.fluentd.logger.FluentLogger;
 
 import java.util.*;
 
