@@ -1,14 +1,19 @@
 # Feed Service
 
 ## Overview
-Feed Service is a Spring Boot application that provides APIs to manage and retrieve recipes and feed elements. It integrates with external services and uses Redis for caching.
+Feed Service is a Spring Boot application that provides APIs to retrieve recipes and collection elements. It integrates with external services and uses Redis for caching.
 
 ## Technologies
 - Java
 - Spring Boot
 - Maven
 - Redis
-- Docker
+- RabbitMQ
+- FluentBit
+- GRPC
+
+## Architecture
+![Software Architecture in Hexagonal Pattern](./media/Feed_Service_Architektur.drawio.png)
 
 ## Configuration
 The application configuration is managed through the `application.properties` file. Key properties include:
@@ -17,6 +22,12 @@ The application configuration is managed through the `application.properties` fi
 - `spring.data.redis.host`: Redis host
 - `spring.data.redis.port`: Redis port
 - `spring.data.redis.password`: Redis password
+- `spring.rabbitmq.host`: RabbitMQ host
+- `spring.rabbitmq.port`: RabbitMQ port
+- `spring.rabbitmq.username`: RabbitMQ username
+- `spring.rabbitmq.password`: RabbitMQ password
+- `fluentd.host`: FluentBit host
+- `fluentd.port`: FluentBit port
 
 ## API Endpoints
 
