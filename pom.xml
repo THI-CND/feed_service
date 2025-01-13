@@ -45,7 +45,11 @@
             <artifactId>jedis</artifactId>
             <version>5.2.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.fluentd</groupId>
+            <artifactId>fluent-logger</artifactId>
+            <version>0.3.4</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
