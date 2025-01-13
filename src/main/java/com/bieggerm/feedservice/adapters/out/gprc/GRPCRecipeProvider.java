@@ -1,14 +1,11 @@
-package com.bieggerm.feedservice.adapters.out.gprc.dto;
+package com.bieggerm.feedservice.adapters.out.gprc;
 
 import com.bieggerm.feedservice.app.ports.outgoing.RecipeProvider;
 import com.bieggerm.feedservice.domain.model.RecipeElement;
 import de.benedikt_schwering.thicnd.stubs.Null;
-import de.benedikt_schwering.thicnd.stubs.RecipeRequest;
 import de.benedikt_schwering.thicnd.stubs.RecipeServiceGrpc;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class GRPCRecipeProvider implements RecipeProvider {
