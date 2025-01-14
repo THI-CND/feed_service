@@ -19,21 +19,23 @@ public class CollectionElementDto extends FeedElementDto implements Serializable
 
     private final String type = "collection";
 
-    public static CollectionElementDto fromElementToDto(CollectionElement collectionElement) {
-        CollectionElementDto entity = new CollectionElementDto();
-        entity.setName(collectionElement.getName());
-        entity.setDescription(collectionElement.getDescription());
-        entity.setAuthor(collectionElement.getAuthor());
-        entity.setId(collectionElement.getId());
-        return entity;
+    @Override
+    public CollectionElementDto fromElement(FeedElement feedElement) {
+        CollectionElement collectionElement = (CollectionElement) feedElement;
+        this.setName(collectionElement.getName());
+        this.setDescription(collectionElement.getDescription());
+        this.setId(collectionElement.getId());
+        this.setAuthor(collectionElement.getAuthor());
+        return this;
     }
 
-    public FeedElement fromDtoToElement(CollectionElementDto feedElementDto) {
+    @Override
+    public CollectionElement toElement() {
         CollectionElement collectionElement = new CollectionElement();
-        collectionElement.setName(feedElementDto.getName());
-        collectionElement.setDescription(feedElementDto.getDescription());
-        collectionElement.setAuthor(feedElementDto.getAuthor());
-        collectionElement.setId(feedElementDto.getId());
+        collectionElement.setName(this.getName());
+        collectionElement.setDescription(this.getDescription());
+        collectionElement.setId(this.getId());
+        collectionElement.setAuthor(this.getAuthor());
         return collectionElement;
     }
 }

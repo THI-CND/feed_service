@@ -19,21 +19,23 @@ public class RecipeElementDto extends FeedElementDto implements Serializable {
 
     private final String type = "recipe";
 
-    public static RecipeElementDto fromElementToDto(RecipeElement recipeElement) {
-        RecipeElementDto entity = new RecipeElementDto();
-        entity.setName(recipeElement.getName());
-        entity.setDescription(recipeElement.getDescription());
-        entity.setId(recipeElement.getId());
-        entity.setAuthor(recipeElement.getAuthor());
-        return entity;
+    @Override
+    public RecipeElementDto fromElement(FeedElement feedElement) {
+        RecipeElement recipeElement = (RecipeElement) feedElement;
+        this.setName(recipeElement.getName());
+        this.setDescription(recipeElement.getDescription());
+        this.setId(recipeElement.getId());
+        this.setAuthor(recipeElement.getAuthor());
+        return this;
     }
 
-    public FeedElement fromDtoToElement(RecipeElementDto feedElementDto) {
+    @Override
+    public RecipeElement toElement() {
         RecipeElement recipeElement = new RecipeElement();
-        recipeElement.setName(feedElementDto.getName());
-        recipeElement.setDescription(feedElementDto.getDescription());
-        recipeElement.setId(feedElementDto.getId());
-        recipeElement.setAuthor(feedElementDto.getAuthor());
+        recipeElement.setName(this.getName());
+        recipeElement.setDescription(this.getDescription());
+        recipeElement.setId(this.getId());
+        recipeElement.setAuthor(this.getAuthor());
         return recipeElement;
     }
 }

@@ -25,19 +25,17 @@ public abstract class FeedElementDto implements Serializable {
 
     public static FeedElementDto fromElementToDto(FeedElement feedElement) {
         if (feedElement instanceof RecipeElement) {
-            return RecipeElementDto.fromElementToDto((RecipeElement) feedElement);
+            return new RecipeElementDto().fromElement((RecipeElement) feedElement);
         } else if (feedElement instanceof CollectionElement) {
-            return CollectionElementDto.fromElementToDto((CollectionElement) feedElement);
+            return new CollectionElementDto().fromElement((CollectionElement) feedElement);
         }
-        return null;
+        throw new IllegalArgumentException("Unknown FeedElement type");
     }
 
     public static FeedElement fromDtoToElement(FeedElementDto feedElementDto) {
-        if (feedElementDto instanceof RecipeElementDto) {
-            return ((RecipeElementDto) feedElementDto).fromDtoToElement((RecipeElementDto) feedElementDto);
-        } else if (feedElementDto instanceof CollectionElementDto) {
-            return ((CollectionElementDto) feedElementDto).fromDtoToElement((CollectionElementDto) feedElementDto);
-        }
-        return null;
+        return feedElementDto.toElement();
     }
+
+    public abstract FeedElementDto fromElement(FeedElement feedElement);
+    public abstract FeedElement toElement();
 }
