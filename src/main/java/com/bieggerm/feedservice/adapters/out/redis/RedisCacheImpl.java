@@ -22,8 +22,8 @@ public class RedisCacheImpl implements FeedCache, Serializable {
 
     public void save(FeedElement feedElement) {
             FeedElementDto feedElementDto = FeedElementDto.fromElementToDto(feedElement);
-            template.opsForZSet().add("feedZset", feedElementDto.getName(), System.currentTimeMillis());
-            template.opsForHash().put("feedHash", feedElementDto.getName(), feedElementDto);
+            template.opsForZSet().add("feedZset", feedElementDto.getId(), System.currentTimeMillis());
+            template.opsForHash().put("feedHash", feedElementDto.getId(), feedElementDto);
     }
 
 
