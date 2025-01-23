@@ -26,7 +26,6 @@ public class RedisCacheImpl implements FeedCache, Serializable {
             template.opsForHash().put("feedHash", feedElementDto.getId(), feedElementDto);
     }
 
-
     public List<FeedElement> findAll(int page) {
         Set<Object> hashFields = template.opsForZSet().range("feedZset", page*5L-5L, page * 5L);
         List<FeedElement> results = new ArrayList<>();
@@ -41,6 +40,11 @@ public class RedisCacheImpl implements FeedCache, Serializable {
     public void markAsRead(String userId, FeedElement feedElement) {
         FeedElementDto feedElementDto = FeedElementDto.fromElementToDto(feedElement);
         template.opsForHash().put(userId, feedElementDto.getName(), true);
+    }
+
+    public void flush() {
+        template.delete("feedZset");
+        template.delete("feedHash");
     }
 
 }

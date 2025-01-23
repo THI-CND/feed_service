@@ -51,6 +51,7 @@ public class FeedServiceImpl implements FeedService {
     }
 
     private void refreshCache() {
+        feedCache.flush();
         RecipeElement[] recipes = recipeProvider.getRecipes();
 
         CollectionElement[] collections = collectionProvider.getCollections();
